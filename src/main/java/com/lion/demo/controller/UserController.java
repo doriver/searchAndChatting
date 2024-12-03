@@ -2,6 +2,7 @@ package com.lion.demo.controller;
 
 import com.lion.demo.entity.User;
 import com.lion.demo.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
@@ -96,4 +97,46 @@ public class UserController {
         userService.updateUser(user);
         return "redirect:/user/list";
     }
+
+    @GetMapping("/login")
+    public String loginForm() {
+        return "user/login";
+    }
+
+    @PostMapping("/login")
+    public String loginProc(String uid, String pwd, HttpSession session, Model model) {
+
+        String msg, url;
+        int result = userService.login(uid, pwd);
+
+        if (result == UserService.CORRECT_LOGIN) {
+            User user = userService.findByUid(uid);
+            session.setAttribute("sessUid", uid);
+            session.setAttribute("sessUname", user.getUname());
+
+            msg = user.getUname() + "님 환영합니다.";
+            url = "/mall/list";
+        } else if (result == UserService.WRONG_PASSWORD) {
+            msg = "패스워드가 틀렸습니다.";
+            url = "/user/login";
+        } else {
+            msg = "입력한 아이디가 없습니다.";
+            url = "/user/register";
+        }
+        model.addAttribute("msg",msg);
+        model.addAttribute("url",url);
+
+        return "common/alertMsg";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/user/login";
+    }
+
+
+
+
+
 }
