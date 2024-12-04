@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService{
     @Autowired private UserRepository userRepository;
 
     @Override
-    public Order createOrder(String uid, List<Cart> cartList) {
+    public Order createOrder(String uid, List<Cart> cartList) { // 이쪽 코드 봐야함
         User user = userRepository.findById(uid).orElse(null);
         Order order = Order.builder()
                 .user(user).orderDateTime(LocalDateTime.now())
