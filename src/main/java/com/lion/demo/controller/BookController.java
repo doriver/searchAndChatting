@@ -6,10 +6,7 @@ import com.lion.demo.service.CsvFileReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,10 +28,25 @@ public class BookController {
                        @RequestParam(name="q", defaultValue = "") String query,
             Model model) {
 
-//        List<Book> bookList = bookService.getBooksByPage(page); // 이쪽 if문으로 해줘야함
+//        List<Book> bookList = bookService.getBooksByPage(page); // 아래 서비스 메소드에서 if문 마지막에 else추가해줘서 했음
         List<Book> bookList = bookService.getBookList(page,field,query);
         model.addAttribute("bookList", bookList);
+        model.addAttribute("query", query);
         return "book/list";
+    }
+
+    @GetMapping("/detail/{bid}")
+    public String detail(@PathVariable long bid,
+                         @RequestParam(name="q", defaultValue = "") String query,
+                         Model model) {
+        Book book = bookService.findByBid(bid);
+        if (!query.equals("")) {
+            String highlightedSummary = book.getSummary()
+                    .replaceAll(query, "<span style='background-color: skyblue;'>" + query + "</span>");
+            book.setSummary(highlightedSummary);
+        }
+        model.addAttribute("book", book);
+        return "book/detail";
     }
 
     @GetMapping("/insert")

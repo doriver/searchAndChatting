@@ -40,6 +40,8 @@ public class BookServiceImpl implements BookService{
             bookPage = bookRepository.findByCompanyContaining(query, pageable);
         } else if (field.equals("summary")) {
             bookPage = bookRepository.findBySummaryContaining(query, pageable);
+        } else {
+            bookPage = bookRepository.findAll(pageable);
         }
         return bookPage.getContent();
     }
