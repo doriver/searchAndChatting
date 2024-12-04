@@ -28,7 +28,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout( auth -> auth
-                        .logoutUrl("/usr/logout")
+                        .logoutUrl("/user/logout")
                         .invalidateHttpSession(true) // 로그아웃시 세션 삭제
                         .deleteCookies("JSESSIONID")
                         .logoutSuccessUrl("/user/login")
