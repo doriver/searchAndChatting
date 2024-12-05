@@ -32,7 +32,6 @@ public class UserController {
     @GetMapping("/register")
     public String aa() {
         User u1 = new User();
-        User u2 = new User("","","","", LocalDate.now(),"");
 
         User user = User.builder() // 필드명이 메소드형태로 바뀌게 함
                 .uid("")

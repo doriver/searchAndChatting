@@ -17,11 +17,12 @@ public class User {
     @Id
     private String uid;
 
-
     private String pwd;
     private String uname;
     private String email;
     private LocalDate regDate;
     private String role;
 
+    private String provider;
+    private String profileUrl;
 }
