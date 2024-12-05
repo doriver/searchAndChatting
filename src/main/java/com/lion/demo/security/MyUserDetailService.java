@@ -1,7 +1,7 @@
-package com.lion.demo.service;
+package com.lion.demo.security;
 
-import com.lion.demo.entity.MyUserDetails;
 import com.lion.demo.entity.User;
+import com.lion.demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +18,13 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUid(username);
-        if (user != null) {
-            log.info("login 완료: " + user.getUid());
-            return new MyUserDetails(user);
+
+        if (user == null) {
+            log.warn("login 실패: 아이디를 찾을수 없습니다. (username: " + username + ")");
+            throw new UsernameNotFoundException("사용자를 찾을수 없습니다: " + username);
         }
-        return null;
+
+        log.info("login 시도: " + user.getUid());
+        return new MyUserDetails(user);
     }
 }
