@@ -3,7 +3,9 @@
 <head>
   <header th:replace="~{fragments/base :: head}"></header>
   <style>
-    th, td, select, input, button { padding: 3px; }
+    th {text-align: center;}
+    td {vertical-align: middle;}
+
   </style>
   <script>
     function handleEnter(event) {
@@ -18,10 +20,7 @@
       const uri = '/book/list?p=1' + '&f=' + field + '&q=' + query;
       location.href = encodeURI(uri);   // 한글 입력시 인코딩해서 전달
     }
-    function gotoPage() {
-      const page = document.getElementById('page').value;
-      location.href = '/book/list?p=' + page;
-    }
+  
   </script>
 </head>
 <body>

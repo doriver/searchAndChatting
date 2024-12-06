@@ -47,6 +47,24 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
+    public Page<Book> getPagedBooks(int page, String field, String query) {
+        Pageable pageable = PageRequest.of(page - 1, PAGE_SIZE);
+        Page<Book> bookPage = null;
+        if (field.equals("title")) {
+            bookPage = bookRepository.findByTitleContaining(query, pageable);
+        } else if (field.equals("author")) {
+            bookPage = bookRepository.findByAuthorContaining(query, pageable);
+        } else if (field.equals("company")) {
+            bookPage = bookRepository.findByCompanyContaining(query, pageable);
+        } else if (field.equals("summary")) {
+            bookPage = bookRepository.findBySummaryContaining(query, pageable);
+        } else {
+            bookPage = bookRepository.findAll(pageable);
+        }
+        return bookPage;
+    }
+
+    @Override
     public void insertBook(Book book) {
         bookRepository.save(book);
     }
