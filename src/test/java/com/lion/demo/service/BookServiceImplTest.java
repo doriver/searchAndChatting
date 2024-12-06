@@ -66,7 +66,64 @@ public class BookServiceImplTest {
         assertThat(foundBookList.get(1).getPrice()).isEqualTo(24000);
     }
 
+    @Test
+    void testGetBookList() {
+        Book book1 = Book.builder().bid(999L).title("title1").author("author1").company("company1").summary("summary1").build();
+        Book book2 = Book.builder().bid(1000L).title("title2").author("author2").company("company2").summary("summary2").build();
+        List<Book> bookList = Arrays.asList(book1, book2);
 
+        Pageable pageable = PageRequest.of(0, BookService.PAGE_SIZE);
+        Page<Book> bookPage = new PageImpl<>(bookList, pageable, bookList.size());
+
+        when(bookRepository.findByTitleContaining("title",pageable)).thenReturn(bookPage);
+        when(bookRepository.findByAuthorContaining("author",pageable)).thenReturn(bookPage);
+        when(bookRepository.findByCompanyContaining("company",pageable)).thenReturn(bookPage);
+        when(bookRepository.findBySummaryContaining("summary",pageable)).thenReturn(bookPage);
+
+        // when
+        List<Book> foundBooksByTitle = bookService.getBookList(1,"title","title");
+        List<Book> foundBooksByAuthor = bookService.getBookList(1,"author","author");
+        List<Book> foundBooksByCompany = bookService.getBookList(1,"company","company");
+        List<Book> foundBooksBySummary = bookService.getBookList(1,"summary","summary");
+
+        // then
+        assertThat(foundBooksByTitle).hasSize(2);
+        assertThat(foundBooksByTitle.get(0).getTitle()).contains("title");
+
+        assertThat(foundBooksByAuthor).hasSize(2);
+        assertThat(foundBooksByAuthor.get(0).getAuthor()).contains("author");
+
+        assertThat(foundBooksByCompany).hasSize(2);
+        assertThat(foundBooksByCompany.get(0).getCompany()).contains("company");
+
+        assertThat(foundBooksBySummary).hasSize(2);
+        assertThat(foundBooksBySummary.get(0).getSummary()).contains("summary");
+
+    }
+
+    @Test
+    void testInsertBook() {
+        Book book = Book.builder().bid(999L).title("title").price(23000).build();
+
+        bookService.insertBook(book);
+        verify(bookRepository, times(1)).save(book);
+    }
+
+    @Test
+    void testUpdateBook() {
+        Book book = Book.builder().bid(999L).title("title").price(23000).build();
+
+        bookService.updateBook(book);
+        verify(bookRepository, times(1)).save(book);
+    }
+
+    @Test
+    void testDeleteBook() {
+        Book book = Book.builder().bid(999L).title("title").price(23000).build();
+
+        bookService.deleteBook(999L);
+        verify(bookRepository, times(1)).deleteById(999L);
+    }
 
 
 }
