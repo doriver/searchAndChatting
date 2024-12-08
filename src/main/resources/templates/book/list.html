@@ -98,9 +98,7 @@
 						<span th:if="${session.currentBookPage gt 10}">
 							<li class="page-item"><a class="page-link" th:href="@{/book/list(p=${startPage-1},f=${field},q=${query})}"><i class="fa-solid fa-less-than"></i></a></li>
 						</span>
-            <span th:if="${session.currentBookPage le 10}">
-							<li class="page-item"><a class="page-link" href="#"><i class="fa-solid fa-less-than"></i></a></li>
-						</span>
+  
             <span th:each="page: ${pageList}">
 							<span th:switch="${page}">
 								<th:block th:case="${session.currentBookPage}">
@@ -118,9 +116,7 @@
             <span th:if="${totalPages gt endPage}">
 							<li class="page-item"><a class="page-link" th:href="@{/book/list(p=${endPage+1},f=${field},q=${query})}"><i class="fa-solid fa-greater-than"></i></a></li>
 						</span>
-            <span th:if="${totalPages eq endPage}">
-							<li class="page-item"><a class="page-link" href="#"><i class="fa-solid fa-greater-than"></i></a></li>
-						</span>
+          
           </ul>
         </main>
 			</div>
