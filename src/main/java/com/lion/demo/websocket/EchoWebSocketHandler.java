@@ -14,13 +14,8 @@ import java.util.Set;
 public class EchoWebSocketHandler extends TextWebSocketHandler {
     private final Set<WebSocketSession> sessions = Collections.synchronizedSet(new HashSet<>());
 
-
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        sessions.add(session);
-
-    }
-
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception { sessions.add(session); }
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
@@ -33,9 +28,6 @@ public class EchoWebSocketHandler extends TextWebSocketHandler {
             }
         }
     }
-
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        sessions.remove(session);
-    }
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception { sessions.remove(session); }
 }

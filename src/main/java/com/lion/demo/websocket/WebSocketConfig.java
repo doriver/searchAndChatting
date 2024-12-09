@@ -13,7 +13,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Autowired private EchoWebSocketHandler echoWebSocketHandler;
     @Autowired private PersonalWebSocketHandler personalWebSocketHandler;
 
-
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(echoWebSocketHandler, "/echo")
@@ -22,7 +21,5 @@ public class WebSocketConfig implements WebSocketConfigurer {
         registry.addHandler(personalWebSocketHandler, "/personal")
                 .addInterceptors(new UserHandshakeInterceptor()) // 1:1 messaging
                 .setAllowedOrigins("*");
-
-
     }
 }
