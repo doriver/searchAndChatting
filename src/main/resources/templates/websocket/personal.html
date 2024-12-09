@@ -27,6 +27,9 @@
             console.log('message from server: ' + event.data);
             const messages = document.getElementById('message');
             message.value += event.data + '\n'; // 여기가 다른사람이 보낸 메시지인듯
+
+            const recipient = event.data.split(':')[0].substring(5);
+            document.getElementById('recipientId').value = recipient;
         }
 
         socket.onclose = () => {
