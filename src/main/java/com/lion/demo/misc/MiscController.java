@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MiscController {
 
     @Autowired private ApiService apiService;
+    @Autowired private MetricsService metricsService;
     @Value("${server.port}") private String serverPort;
 
     @GetMapping("/api")
@@ -24,4 +25,10 @@ public class MiscController {
         return "server port = " + serverPort;
     }
 
+    @GetMapping("/record-metrics")
+    public String recordMetrics() {
+        metricsService.recordCustomMetrics();
+
+        return "Custom metrics recorded!";
+    }
 }
