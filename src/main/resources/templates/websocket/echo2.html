@@ -10,7 +10,6 @@
 
 </head>
 <script>
-
     let socket;
 
     function connect() {
@@ -23,8 +22,7 @@
 
         socket.onmessage = (event) => {
             console.log('message from server: ' + event.data);
-            const messages = document.getElementById('message');
-            message.value += event.data + '\n';
+            document.getElementById('message').value += event.data + '\n';
         }
 
         socket.onclose = () => {
