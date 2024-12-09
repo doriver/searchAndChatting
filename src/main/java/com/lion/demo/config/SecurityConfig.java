@@ -23,7 +23,8 @@ public class SecurityConfig {
                 .headers( x -> x.frameOptions(y -> y.disable())) // H2 디비 쓰려고
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(//"/book/**","cart/**",
-                                "/book/list", "/book/detail/**", "/misc/**",
+                                "/book/list", "/book/detail/**", "/misc/**", "/actuator/**",
+                                "/websocket/**", "/echo",
                                 "/mall/list", "/mall/detail"
                                 ,"/user/register", "/h2-console", "/demo/**"
                                 , "/img/**", "/js/**", "/css/**", "/error/**").permitAll()
