@@ -27,6 +27,5 @@ public class Recipient {
     @JoinColumn(name = "friendUid", referencedColumnName = "uid")
     private User friend;
 
-
     private LocalDateTime timestamp;
 }

@@ -43,10 +43,11 @@ public class ChattingController {
     @GetMapping("/getChatterList")
     @ResponseBody
     public ResponseEntity<List<Chatter>> getChatterList(@RequestParam String userId) {
+        List<Chatter> chatterList = new ArrayList<>();
+
         List<Recipient> friendList = recipientService.getFriendList(userId);
 //        HashSet<Recipient> friendSet = new HashSet<>(friendList); // 채팅홈 중복문제 해결위해 임시로했는데 안됨
-        
-        List<Chatter> chatterList = new ArrayList<>();
+
         for (Recipient recipient : friendList) {
             User friend = recipient.getUser().getUid().equals(userId) ? recipient.getFriend() : recipient.getUser();
             ChatMessage chatMessage = chatMessageService.getLastChatMessage(userId, friend.getUid());
@@ -57,6 +58,7 @@ public class ChattingController {
                     .timeStr(timeUtil.timeAgo(chatMessage.getTimestamp()))
                     .newCount(newCount)
                     .build();
+
             chatterList.add(chatter);
         }
         return ResponseEntity.ok(chatterList);
