@@ -62,6 +62,15 @@ public class ChattingController {
         return ResponseEntity.ok(chatterList);
     }
 
+    @PostMapping("/addFriend")
+    @ResponseBody
+    public String addFriend(String friendUid, HttpSession session) {
+        String sessUid = (String) session.getAttribute("sessUid");
+        User user = userService.findByUid(sessUid);
+        User friend = userService.findByUid(friendUid);
+        recipientService.insertFriend(user, friend);
+        return "";
+    }
 
     @GetMapping("/mock")
     public String mockForm() {
