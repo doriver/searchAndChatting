@@ -102,6 +102,8 @@ public class ChattingController {
                         .message(cm.getMessage())
                         .timeStr(timeUtil.amPmStr(cm.getTimestamp()))
                         .hasRead(cm.getHasRead())
+                        .friendUname(friend.getUname())
+                        .friendProfileUrl(friend.getProfileUrl())
                         .build();
                 list.add(chatItem);
             }
