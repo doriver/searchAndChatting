@@ -21,6 +21,7 @@ public class ChattingController {
     @Autowired private ChatMessageService chatMessageService;
     @Autowired private RecipientService recipientService;
     @Autowired private UserService userService;
+    @Autowired private ChattingWebSocketHandler webSocketHandler;
     @Autowired private TimeUtil timeUtil;
 
     @Value("${server.port}") private String serverPort;
@@ -118,7 +119,8 @@ public class ChattingController {
         User sender = userService.findByUid(senderUid);
         User recipient = userService.findByUid(recipientUid);
         ChatMessage chatMessage = ChatMessage.builder()
-                .sender(sender).recipient(recipient).message(message).timestamp(LocalDateTime.now()).hasRead(0)
+                .sender(sender).recipient(recipient).message(message).timestamp(LocalDateTime.now())
+                .hasRead(webSocketHandler.isReadable(senderUid, recipientUid))
                 .build();
 
         chatMessageService.insertChatMessage(chatMessage);

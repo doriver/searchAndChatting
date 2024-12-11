@@ -14,7 +14,7 @@ function connect() {
 	socket.onmessage = async(event) => {
 		console.log('Message from server: ' + event.data);
 		setTimeout(async () => {
-		    await fetchChatterList();
+		    await fetchChatItems();
 		}, 200);
 	}
 	socket.onclose = () => {
@@ -102,11 +102,15 @@ function handleEnterKey(event) {
 }
 
 function sendMessage() {
-    const recipientId = document.getElementById('recipientId').value;
+    const recipientId = document.getElementById('recipientId').value.trim();
     const userId = document.getElementById('userId').value;
     const message = document.getElementById('messageInput').value;
 
-    // socket 송신
+    // socket 송신 - 상대방이 받을 준비 되있을때만 가능
+    if (socket && socket.readyState === socket.OPEN) {
+        socket.send(recipientId + ':' + message);
+    
+    }
 
     // DB에 저장 - Controller에 보내기
     const formData = new FormData();
