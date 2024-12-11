@@ -72,14 +72,7 @@ function disconnect() {
 		alert('WebSocket is not connected.');
 	}
 }
-function disconnect() {
-	if (socket && socket.readyState === socket.OPEN) {
-		socket.close();
-		console.log('Disconnected from the server by ' + recipientId);
-	} else {
-		alert('WebSocket is not connected.');
-	}
-}
+
 
 function handlePopover() {
     // Popover 초기화
