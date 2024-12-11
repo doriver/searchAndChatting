@@ -15,7 +15,7 @@ function connect() {
 		console.log('Message from server: ' + event.data);
 		setTimeout(async () => {
 		    await fetchChatItems();
-		}, 200);
+		}, 100);
 	}
 	socket.onclose = () => {
 		console.log('Disconnected from the server');
@@ -29,8 +29,10 @@ async function fetchChatItems() {
     try {
         const response = await fetch(`/chatting/getChatItems?userId=${userId}&recipientId=${recipientId}`);
         if (response.ok) {
-            const chatItemsByDate = await response.json();
-            updateChatContainer(chatItemsByDate);
+            setTimeout(async() => {
+                const chatItemsByDate = await response.json();
+                updateChatContainer(chatItemsByDate);
+            }, 100 );
         }
     } catch (error) {
         console.error("Failed to fetch messages:", error);
@@ -129,5 +131,14 @@ function sendMessage() {
             fetchChatItems(); // 뭐였지 이게
         }
     })
+}
 
+function sendSignal() {
+    const recipientId = document.getElementById('recipientId').value.trim();
+    
+    // socket 송신 - 상대방에게 내가 접속했음을 알림
+    if (socket && socket.readyState === socket.OPEN) {
+        socket.send(recipientId + ':Alive');
+    
+    }    
 }

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -108,7 +110,9 @@ public class ChattingController {
                         .build();
                 list.add(chatItem);
             }
-            chatItemsByDate.put(key,list);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd (E)", Locale.KOREAN);
+            String date = LocalDate.parse(key).format(formatter);
+            chatItemsByDate.put(date, list);
         }
         return ResponseEntity.ok(chatItemsByDate);
     }
