@@ -41,7 +41,7 @@ function updateChatContainer(chatItemsByDate) {
     const chatContainer = document.getElementById("chatContainer");
     chatContainer.innerHTML = ""; // 기존 메시지 초기화
 
-    for (const [date, chatItems] of Object.entries(chatItemsByDate)) {
+    for (const [date, chatItems] of Object.entries(chatItemsByDate)) { // map받았을때 이렇게
         // 날짜 표시
         const dateDiv = document.createElement("div");
         dateDiv.className = "text-center mt-2 mb-3";
@@ -99,4 +99,31 @@ function handleEnterKey(event) {
 		event.preventDefault();     // 줄바꿈 방지(기본 엔터 키 동작 방지)
 		sendMessage();
 	}
+}
+
+function sendMessage() {
+    const recipientId = document.getElementById('recipientId').value;
+    const userId = document.getElementById('userId').value;
+    const message = document.getElementById('messageInput').value;
+
+    // socket 송신
+
+    // DB에 저장 - Controller에 보내기
+    const formData = new FormData();
+    formData.append('senderUid', userId);
+    formData.append('recipientUid', recipientId);
+    formData.append('message', message);
+
+    $.ajax({
+        type: 'POST',
+        data: formData,
+        url: '/chatting/insert',
+        processData: false, // jQuery가 data를 변환하는 것을 방지
+        contentType: false, // jQuery가 content typedmf 변경하는 것을 방지
+        success: function() {
+            $('#messageInput').val('');
+            fetchChatItems(); // 뭐였지 이게
+        }
+    })
+
 }

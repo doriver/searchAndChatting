@@ -51,7 +51,7 @@ public class ChatMessageServiceImpl implements ChatMessageService{
         }
         // list 2개 합치는거
         List<ChatMessage> mergedList = Stream.concat(list1.stream(), list2.stream())
-                .sorted(Comparator.comparing(ChatMessage:: getTimestamp).reversed())
+                .sorted(Comparator.comparing(ChatMessage:: getTimestamp))
                 .collect(Collectors.toList());
 
         Map<String, List<ChatMessage>> map = new LinkedHashMap<>();

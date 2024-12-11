@@ -112,6 +112,20 @@ public class ChattingController {
         return ResponseEntity.ok(chatItemsByDate);
     }
 
+    @PostMapping("/insert")
+    @ResponseBody
+    public String insert(String senderUid, String recipientUid, String message) {
+        User sender = userService.findByUid(senderUid);
+        User recipient = userService.findByUid(recipientUid);
+        ChatMessage chatMessage = ChatMessage.builder()
+                .sender(sender).recipient(recipient).message(message).timestamp(LocalDateTime.now()).hasRead(0)
+                .build();
+
+        chatMessageService.insertChatMessage(chatMessage);
+
+        return "ok";
+    }
+
     @GetMapping("/mock")
     public String mockForm() {
         return "chatting/mock";
