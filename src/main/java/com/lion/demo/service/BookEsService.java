@@ -29,11 +29,13 @@ public class BookEsService {
         return bookEsRepository.findById(bookId).orElse(null);
     }
 
+    // 자연어 처리?
     public Page<BookEsDto> getPagedBooks(int page, String field, String keyword) {
         Pageable pageable = PageRequest.of(page-1, PAGE_SIZE);
 
         Query query = NativeQuery.builder()
                 .withQuery(buildMatchQuery(field,keyword))
+                .withPageable(pageable)
                 .build();
 
         SearchHits<BookEs> searchHits = elasticsearchTemplate.search(query, BookEs.class);
@@ -49,23 +51,6 @@ public class BookEsService {
 
     public void insertBook(BookEs bookEs) {
         bookEsRepository.save(bookEs);
-    }
-    // 자연어 처리?
-    private Page<BookEsDto> getBooksByKeyword(String keyword, String field) {
-        Query query = NativeQuery.builder()
-                .withQuery(buildMatchQuery(field,keyword))
-                .build();
-
-        SearchHits<BookEs> searchHits = elasticsearchTemplate.search(query, BookEs.class);
-        List<BookEsDto> bookEsDtoList = searchHits
-                .getSearchHits()
-                .stream().map(hit -> new BookEsDto(hit.getContent(), hit.getScore()))
-                .toList();
-
-        // total hit count
-        long totalHits = searchHits.getTotalHits();
-        Pageable pageable = PageRequest.of(0, PAGE_SIZE);
-        return new PageImpl<>(bookEsDtoList, pageable, totalHits);
     }
 
     private Query buildMatchQuery(String field, String keyword) {
