@@ -13,6 +13,18 @@ public class RestaurantController {
 
     @Autowired private CsvFileReaderService csvFileReaderService;
 
+    @GetMapping("/list")
+    public String list() {
+
+
+
+
+
+        return "";
+    }
+
+
+
     @GetMapping("/init")
     @ResponseBody
     public String init() {

@@ -127,17 +127,6 @@ public class CsvFileReaderService { // 파일읽어서 DB에 넣을꺼
                         e.printStackTrace();
                     }
 
-//                    String imageUrl = record.get("imageUrl");
-//                    String summary = record.get("summary");
-//                    BookEs bookEs = BookEs.builder()
-//                            .title(title).author(author).company(company).price(price)
-//                            .imageUrl(imageUrl).summary(summary)
-//                            .build();
-//                    bookEsService.insertBook(bookEs);
-//
-//                    if (count ++ % 1000 == 0) {
-//                        System.out.println("count = " + count);
-//                    }
                 }
             }
 
