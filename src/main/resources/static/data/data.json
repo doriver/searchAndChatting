@@ -1,0 +1,41 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "korean_analyzer": {
+          "type": "custom",
+          "tokenizer": "nori_tokenizer",
+          "filter": ["lowercase", "nori_part_of_speech"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "text",
+        "analyzer": "korean_analyzer"
+      },
+      "intro": {
+        "type": "text",
+        "analyzer": "korean_analyzer"
+      },
+      "info": {
+        "type": "object",
+        "dynamic": true
+      },
+      "reviews": {
+        "type": "nested",
+        "properties": {
+          "review": {
+            "type": "text",
+            "analyzer": "korean_analyzer"
+          },
+          "score": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

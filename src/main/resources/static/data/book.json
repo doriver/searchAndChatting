@@ -1,0 +1,33 @@
+{
+    "settings": {
+      "analysis": {
+        "analyzer": {
+          "korean_analyzer": {
+            "type": "custom",
+            "tokenizer": "nori_tokenizer",
+            "filter": ["lowercase", "nori_part_of_speech"]
+          }
+        }
+      }
+    },
+    "mappings": {
+      "properties": {
+        "title": {
+          "type": "text",
+          "analyzer": "korean_analyzer"
+        },
+        "author": {
+          "type": "text",
+          "analyzer": "korean_analyzer"
+        },
+        "company": {
+          "type": "text",
+          "analyzer": "korean_analyzer"
+        },
+        "summary": {
+          "type": "text",
+          "analyzer": "korean_analyzer"
+        }
+      }
+    }
+}
