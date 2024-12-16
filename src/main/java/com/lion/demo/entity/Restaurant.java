@@ -19,6 +19,8 @@ import java.util.Map;
 @Builder
 public class Restaurant {
     @Id
+    private String id;
+
     private String name;
 
     private String intro;
