@@ -79,44 +79,42 @@
             </tr>
             <tr th:each="restaurantDto: ${restaurantDtoList}">
               <td style="text-align: center;">
-                <img th:src="${restaurantDto.restaurant.imageUrl}" height="54">
+                <img th:src="${restaurantDto.restaurant.imgSrc}" height="54">
               </td>
               <td>
-                <a th:href="@{/restaurant/detail/{x}(x=${restaurantDto.bookEs.bookId}, q=${query})}">
-                  <span style="font-weight: bold;" th:text="${restaurantDto.bookEs.title}">트렌드 코리아</span>
+                <a th:href="@{/restaurant/detail/{x}(x=${restaurantDto.restaurant.name}, q=${query})}">
+                  <span style="font-weight: bold;" th:text="${restaurantDto.restaurant.name}" style="text-align: center;">통인시장</span>
                 </a>
               </td>
-              <td th:text="${bookEsDto.bookEs.author}">김난도 외 9명</td>
-              <td th:text="${bookEsDto.bookEs.company}">미래의 창</td>
-              <td style="text-align: right;">
-                <span th:text="|${#numbers.formatInteger(bookEsDto.bookEs.price, 0, 'COMMA')}원|">15,000원</span>
-              </td>
-              <td th:text="|${#numbers.formatDecimal(bookEsDto.matchScore, 1, 2)}|">스코어</td>
+              <td th:text="${restaurantDto.infoCount}" style="text-align: center;">8</td>
+              <td th:text="${restaurantDto.reviewCount}" style="text-align: center;">5</td>            
+              <td th:text="|${#numbers.formatDecimal(restaurantDto.reviewScore, 1, 1)}|" style="text-align: center;">스코어</td>
+              <td th:text="|${#numbers.formatDecimal(restaurantDto.matchScore, 1, 2)}|" style="text-align: center;">스코어</td>
             </tr>
           </table>
 
           <!-- pagination -->
           <ul class="pagination justify-content-center my-4">
 						<span th:if="${session.currentBookPage gt 10}">
-							<li class="page-item"><a class="page-link" th:href="@{/bookEs/list(p=${startPage-1},f=${field},q=${query})}"><i class="fa-solid fa-less-than"></i></a></li>
+							<li class="page-item"><a class="page-link" th:href="@{/restaurant/list(p=${startPage-1},f=${field},q=${query})}"><i class="fa-solid fa-less-than"></i></a></li>
 						</span>
   
             <span th:each="page: ${pageList}">
 							<span th:switch="${page}">
-								<th:block th:case="${session.currentBookEsPage}">
+								<th:block th:case="${session.currentRestaurantPage}">
 									<li class="page-item active">
 										<a class="page-link" href="#">[[${page}]]</a>
 									</li>
 								</th:block>
 								<th:block th:case="*">
 									<li class="page-item">
-										<a class="page-link" th:href="@{/bookEs/list(p=${page},f=${field},q=${query})}">[[${page}]]</a>
+										<a class="page-link" th:href="@{/restaurant/list(p=${page},f=${field},q=${query})}">[[${page}]]</a>
 									</li>
 								</th:block>
 							</span>
 						</span>
             <span th:if="${totalPages gt endPage}">
-							<li class="page-item"><a class="page-link" th:href="@{/bookEs/list(p=${endPage+1},f=${field},q=${query})}"><i class="fa-solid fa-greater-than"></i></a></li>
+							<li class="page-item"><a class="page-link" th:href="@{/restaurant/list(p=${endPage+1},f=${field},q=${query})}"><i class="fa-solid fa-greater-than"></i></a></li>
 						</span>
           
           </ul>
