@@ -82,8 +82,8 @@
                 <img th:src="${restaurantDto.restaurant.imgSrc}" height="54">
               </td>
               <td>
-                <a th:href="@{/restaurant/detail/{x}(x=${restaurantDto.restaurant.name}, q=${query})}">
-                  <span style="font-weight: bold;" th:text="${restaurantDto.restaurant.name}" style="text-align: center;">통인시장</span>
+                <a th:href="@{/restaurant/detail/{x}(x=${restaurantDto.restaurant.id}, q=${query})}">
+                  <span style="font-weight: bold;" th:text="${restaurantDto.restaurant.name}" >통인시장</span>
                 </a>
               </td>
               <td th:text="${restaurantDto.infoCount}" style="text-align: center;">8</td>
