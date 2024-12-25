@@ -29,7 +29,7 @@ public class CsvFileReaderService { // 파일읽어서 DB에 넣을꺼
 
     public void csvFileReader() {
         try {
-            Resource resource = resourceLoader.getResource("classpath:static/data/okkyOne.csv");
+            Resource resource = resourceLoader.getResource("classpath:static/data/okkyThree.csv");
 
             try (
                     Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
@@ -47,6 +47,7 @@ public class CsvFileReaderService { // 파일읽어서 DB에 넣을꺼
                     String likeCount = record.get("likeCount");
                     String postReplyLists = record.get("postReplyLists");
 
+                    System.out.println("       =========     ===========    ==========   ");
                     System.out.println(category);
                     System.out.println(tag);
                     System.out.println(user);
