@@ -27,7 +27,8 @@ public class SecurityConfig {
                                 "/websocket/**", "/echo", "/personal", "/restaurant/**",
                                 "/mall/list", "/mall/detail"
                                 ,"/user/register", "/h2-console", "/demo/**"
-                                , "/img/**", "/js/**", "/css/**", "/error/**").permitAll()
+                                , "/img/**", "/js/**", "/css/**", "/error/**"
+                                , "/csvTest/**").permitAll()
                         .requestMatchers( "/book/insert", "/book/yes24", "/bookEs/yes24",
                                 "/order/listAll"
                                 ,"/order/bookStat", "/user/delete", "/user/list").hasAuthority("ROLE_ADMIN")

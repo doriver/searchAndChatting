@@ -27,6 +27,43 @@ public class CsvFileReaderService { // 파일읽어서 DB에 넣을꺼
     @Autowired private BookEsService bookEsService;
     @Autowired private RestaurantRepository restaurantRepository;
 
+    public void csvFileReader() {
+        try {
+            Resource resource = resourceLoader.getResource("classpath:static/data/okkyOne.csv");
+
+            try (
+                    Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+                    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader()) ) {
+                int count = 0;
+                for (CSVRecord record: csvParser) {
+                    String category = record.get("category");
+                    String tag = record.get("tag");
+                    String user = record.get("user");
+                    String title = record.get("title");
+                    String content = record.get("content");
+                    String imgSrc = record.get("imgSrc");
+                    String createAt = record.get("createAt");
+                    String viewCount = record.get("viewCount");
+                    String likeCount = record.get("likeCount");
+                    String postReplyLists = record.get("postReplyLists");
+
+                    System.out.println(category);
+                    System.out.println(tag);
+                    System.out.println(user);
+                    System.out.println(title);
+                    System.out.println(content);
+                    System.out.println(imgSrc);
+                    System.out.println(createAt);
+                    System.out.println(viewCount);
+                    System.out.println(likeCount);
+                    System.out.println(postReplyLists);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void csvFileToH2() {
         try {
             Resource resource = resourceLoader.getResource("classpath:static/data/20241114_yes24_국내도서_새로나온_상품.csv");
