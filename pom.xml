@@ -132,10 +132,13 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 
+		<!--
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
 		</dependency>
+		-->
+
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 			csv파일이 json으로 되있는거 있음, 그거 읽으려고 하는거

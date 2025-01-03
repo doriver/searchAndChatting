@@ -62,11 +62,11 @@ public class UserController {
 
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, HttpSession session) {
         List<User> userList = userService.getUsers();
 
         model.addAttribute("userList", userList);
-
+        session.setAttribute("menu", "user");
         return "user/list";
     }
 
@@ -115,7 +115,7 @@ public class UserController {
         session.setAttribute("sessUname", user.getUname());
 
         String msg = user.getUname() + "님 환영합니다.";
-        String url = "/bookEs/list";
+        String url = "/book/list";
 
         model.addAttribute("msg",msg);
         model.addAttribute("url",url);
