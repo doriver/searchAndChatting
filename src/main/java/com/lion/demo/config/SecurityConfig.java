@@ -1,6 +1,5 @@
 package com.lion.demo.config;
 
-import com.lion.demo.security.JwtRequestFilter;
 import com.lion.demo.security.MyOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,13 +22,13 @@ public class SecurityConfig {
                 .headers( x -> x.frameOptions(y -> y.disable())) // H2 디비 쓰려고
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(//"/book/**","cart/**",
-                                "/book/list", "/book/detail/**", "/bookEs/list", "/bookEs/detail/**", "/misc/**", "/actuator/**",
-                                "/websocket/**", "/echo", "/personal", "/restaurant/**",
+                                "/book/list", "/book/detail/**", "/misc/**", "/actuator/**",
+                                "/websocket/**", "/echo", "/personal",
                                 "/mall/list", "/mall/detail"
                                 ,"/user/register", "/h2-console", "/demo/**"
                                 , "/img/**", "/js/**", "/css/**", "/error/**"
                                 , "/csvTest/**").permitAll()
-                        .requestMatchers( "/book/insert", "/book/yes24", "/bookEs/yes24",
+                        .requestMatchers( "/book/insert", "/book/yes24",
                                 "/order/listAll"
                                 ,"/order/bookStat", "/user/delete", "/user/list").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
@@ -60,15 +59,5 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // JWT 필터 등록
-    @Bean
-    public JwtRequestFilter jwtRequestFilter() {
-        return new JwtRequestFilter();
-    }
 
-    // Authentication Manager 빈 등록
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
 }
